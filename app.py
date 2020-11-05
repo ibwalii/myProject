@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
+from forms import RegistrationForm, LoginForm
 
-from forms import RegistrationForm
 
 app = Flask(__name__)
 
@@ -30,13 +30,23 @@ def home():
 def about():
     return render_template('about.html', title='about us')
 
-@app.route('/login')
+@app.route('/login', methods = ['GET','POST'])
 def login():
-    return render_template('about.html', title='about us') 
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'ibwalii@wali.com' and form.password.data == 'pass':
+            flash('Login Successful', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Username or password incorrect', 'danger')
+    return render_template('login.html', title='Login Page', form = form) 
 
-@app.route('/register')
+@app.route('/register', methods = ['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('home'))
     return render_template('register.html', title='Registration', form = form)
 
 
