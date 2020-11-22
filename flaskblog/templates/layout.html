@@ -35,7 +35,8 @@
                   <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                   <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
                 {% else %}
-                  <a class="nav-item nav-link" href="{{ url_for('account') }}">My Account</a>
+                  <a class="nav-item nav-link" href="{{ url_for('newPost') }}">New Post</a>
+                  <a class="nav-item nav-link" href="{{ url_for('account') }}">[ {{ current_user.username }} ] My Account</a>
                   <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
                 {% endif%}
               </div>
