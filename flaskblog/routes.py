@@ -144,8 +144,10 @@ def Delete_post(post_id):
     db.session.commit()
     flash('Post Deleted', category='success')
     return redirect(url_for('home'))
-
+    
+user = User()
 def send_reset_email(user):
+    
     token = User.get_reset_token(user)
     msg = Message('Password Reset', sender='techvalley2015@gmail.com', recipients=[user.email])
     msg.body = f''' Click Here to reset your password
@@ -162,7 +164,7 @@ def RequestResetPassword():
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
         send_reset_email(user)
-        flash(f'Reset has been sent to {form.email.data}', category='info')
+        flash(f'Reset has been sent to {user.email}', category='info')
     return render_template('reset_request.html', title='Reset password', form = form)
 
 @app.route('/reset_password/<token>', methods = ['GET', 'POST'])
